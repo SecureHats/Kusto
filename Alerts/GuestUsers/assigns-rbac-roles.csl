@@ -1,0 +1,8 @@
+let NewDate = ago(360m);
+let DomainName = "i-invent.it";
+AzureActivity
+| where TimeGenerated > NewDate
+| where Authorization contains "Microsoft.Authorization/roleAssignments/write"
+| where ActivityStatusValue == "Success"
+| where Caller !contains DomainName
+| where parse_json(Properties).activitySubstatusValue == "Created"
