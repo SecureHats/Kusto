@@ -1,0 +1,6 @@
+let NewDate = ago(5m);
+AuditLogs
+| where TimeGenerated > NewDate
+| where TargetResources[0].userPrincipalName contains "#EXT#@"
+| where parse_json(tostring(parse_json(tostring(TargetResources[0].modifiedProperties))[1].newValue)) contains "Administrator"
+| extend AddedDate = TimeGenerated, Action = parse_json(tostring(TargetResources[0].userPrincipalName)), Assignment = parse_json(tostring(TargetResources[0].modifiedProperties[1].newValue))
