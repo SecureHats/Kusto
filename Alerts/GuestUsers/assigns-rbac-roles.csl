@@ -1,5 +1,5 @@
 let NewDate = ago(360m);
-let DomainName = "i-invent.it";
+let DomainName = "example.com";
 AzureActivity
 | where TimeGenerated > NewDate
 | where Authorization contains "Microsoft.Authorization/roleAssignments/write"
