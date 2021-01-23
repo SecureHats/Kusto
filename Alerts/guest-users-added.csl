@@ -1,0 +1,7 @@
+let NewDate = ago(5m);
+AuditLogs
+| where TimeGenerated > NewDate
+| where ActivityDisplayName == "Invite external user"
+| where TargetResources[0].userPrincipalName contains "#EXT#@"
+| extend AddedDate = TimeGenerated, AddedBy = parse_json(tostring(InitiatedBy.user)).userPrincipalName, ExternalUser = tostring(AdditionalDetails[1].value),TargetName = tostring(TargetResources[1].displayName)
+| extend AccountCustomEntity = TargetName
